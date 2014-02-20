@@ -2,7 +2,6 @@
 # and to export this info in lat/long
 
 require 'sketchup.rb'
-
 class GeoInfo
 
 ### Options Dialog
