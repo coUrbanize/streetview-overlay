@@ -32,7 +32,7 @@ end
 def GeoInfo::go
 
     wdir= Dir.getwd.split("/").join+"\\"
-    dir_fname=UI.savepanel"Pick Directory ", "" , "geoinfo.txt"
+    dir_fname=UI.savepanel"Pick Directory ", "" , "geoinfo.js"
 
     if (dir_fname)
       puts dir_fname
@@ -48,8 +48,9 @@ def GeoInfo::go
     model_bb = model.bounds
 
     # get center point of bounding box
-    # model_center = model_bb.center
-    #
+    model_center = model_bb.center
+    model_center_latlong = model.point_to_latlong(model_center)
+
     # BoundingBox.corner
     # The corner method is used to retrieve a point object at a specified corner of the bounding box.
     #
@@ -80,19 +81,16 @@ def GeoInfo::go
     right_back_latlong = model.point_to_latlong(right_back)
 
     File.open(dir_fname, 'w') { |file| file.write(
-      "left_front, " + left_front_latlong[0].to_f.to_s + ", " + left_front_latlong[1].to_f.to_s + "\n" \
-    + "right_front, "+ right_front_latlong[0].to_f.to_s  + ", " + right_front_latlong[1].to_f.to_s + "\n" \
-    + "left_back, "+ left_back_latlong[0].to_f.to_s  + ", " + left_back_latlong[1].to_f.to_s + "\n" \
-    + "right_back, "+ right_back_latlong[0].to_f.to_s  + ", " + right_back_latlong[1].to_f.to_s + "\n" \
+      "bounding_box = {'left_front': [" + left_front_latlong[0].to_f.to_s + ", " + left_front_latlong[1].to_f.to_s + "],\n" \
+    + "'right_front': ["+ right_front_latlong[0].to_f.to_s  + ", " + right_front_latlong[1].to_f.to_s + "],\n" \
+    + "'left_back': ["+ left_back_latlong[0].to_f.to_s  + ", " + left_back_latlong[1].to_f.to_s + "],\n" \
+    + "'right_back': ["+ right_back_latlong[0].to_f.to_s  + ", " + right_back_latlong[1].to_f.to_s + "]};\n\n" \
+    + "center_point = [" + model_center_latlong[0].to_f.to_s + ", " + model_center_latlong[1].to_f.to_s + "];\n" \
     )}
 
     Sketchup.set_status_text "Writing geolocation"
 
-    # UI.messagebox "You have exported the geolocation information:\n" \
-    #   + @export_list.to_s + "\n\nTo the following directory:\n" \
-    #   + File.dirname(fname).to_s, MB_MULTILINE, "Geolocation Export Successful!"
-
-    UI.messagebox "You have exported the geolocation information\n"
+    UI.messagebox "You have exported geolocation information\n"
 
 #========================
 end ### End class GeoInfo
