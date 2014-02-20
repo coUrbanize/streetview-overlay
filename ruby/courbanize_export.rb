@@ -2,6 +2,7 @@
 # and to export this info in lat/long
 
 require 'sketchup.rb'
+
 class GeoInfo
 
 ### Options Dialog
@@ -80,11 +81,11 @@ def GeoInfo::go
     right_back_latlong = model.point_to_latlong(right_back)
 
     File.open(dir_fname, 'w') { |file| file.write(
-      "bounding_box = {'left_front': [" + left_front_latlong[0].to_f.to_s + ", " + left_front_latlong[1].to_f.to_s + "],\n" \
-    + "'right_front': ["+ right_front_latlong[0].to_f.to_s  + ", " + right_front_latlong[1].to_f.to_s + "],\n" \
-    + "'left_back': ["+ left_back_latlong[0].to_f.to_s  + ", " + left_back_latlong[1].to_f.to_s + "],\n" \
-    + "'right_back': ["+ right_back_latlong[0].to_f.to_s  + ", " + right_back_latlong[1].to_f.to_s + "]};\n\n" \
-    + "center_point = [" + model_center_latlong[0].to_f.to_s + ", " + model_center_latlong[1].to_f.to_s + "];\n" \
+      "bounding_box = {'left_front': [" + left_front_latlong[1].to_f.to_s + ", " + left_front_latlong[0].to_f.to_s + "],\n" \
+    + "'right_front': ["+ right_front_latlong[1].to_f.to_s  + ", " + right_front_latlong[0].to_f.to_s + "],\n" \
+    + "'left_back': ["+ left_back_latlong[1].to_f.to_s  + ", " + left_back_latlong[0].to_f.to_s + "],\n" \
+    + "'right_back': ["+ right_back_latlong[1].to_f.to_s  + ", " + right_back_latlong[0].to_f.to_s + "]};\n\n" \
+    + "center_point = [" + model_center_latlong[1].to_f.to_s + ", " + model_center_latlong[0].to_f.to_s + "];\n" \
     )}
 
     Sketchup.set_status_text "Writing geolocation"

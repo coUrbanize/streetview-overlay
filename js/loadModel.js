@@ -6,7 +6,7 @@
 
 // demo 1
 // @42.36465,-71.102468,3a,75y,267.5h,88.59t/data=!3m4!1e1!3m2!1sMonhRAl9yN44HedMpK81aQ!2e0?hl=en
-var objectPosition = [  42.364398, -71.103438],
+var objectPosition = [ bounding_box['left_front'][0], bounding_box['left_front'][1]],
 VIEWER_POSITION = [42.36465, -71.102468],
 PANO_HEAD = 267.5,
 PANO_PITCH = 3,
