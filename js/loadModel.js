@@ -6,12 +6,12 @@
 
 // demo 1
 // @42.36465,-71.102468,3a,75y,267.5h,88.59t/data=!3m4!1e1!3m2!1sMonhRAl9yN44HedMpK81aQ!2e0?hl=en
-var objectPosition = [ bounding_box['left_front'][0], bounding_box['left_front'][1]],
+var OBJECT_POSITION = [ bounding_box['left_front'][0], bounding_box['left_front'][1]],
 VIEWER_POSITION = [42.36465, -71.102468],
 PANO_HEAD = 267.5,
 PANO_PITCH = 3,
-BUILDING_3D = 'model3d/metropcs/block_outline_multiblock.dae',
-SCENE_POSITION = [-70, -9.5, 8],
+BUILDING_3D = 'model/metro.dae',
+SCENE_POSITION = [ 0, 0, 0],
 SCENE_ROTATION = [-Math.PI/2, 0, 0.5],
 LIGHT_POSITION = [ 400, 400, -200],
 SCALE = [0.04, 0.045, 0.075],
@@ -19,39 +19,7 @@ OPACITY = 0.75,
 SHOW_3D = true;
 
 
-// Translates degrees to meters. It is just a hack, not a proper projection.
-// originLat and originLon should be the "center" of our area of interest or
-// close to it
-function hackMapProjection(lat, lon, originLat, originLon) {
-    var lonCorrection = 1;
-    var rMajor = 6378137.0;
 
-    function lonToX(lon) {
-        return rMajor * (lon * Math.PI / 180);
-    }
-
-    function latToY(lat) {
-        if (lat === 0) {
-            return 0;
-        } else {
-            return rMajor * Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI / 180) / 2));
-        }
-    }
-
-    var x = lonToX(lon - originLon) / lonCorrection;
-    var y = latToY(lat - originLat);
-
-    return {'x': x, 'y': y};
-}
-
-// Origin is the position of our 3d object
-function latLon2ThreeMeters(lat, lon) {
-    var coordinates = hackMapProjection(lat, lon, objectPosition[0], objectPosition[1]);
-    // -7915118.7, 5215761.9
-    // -71.102721,42.364666
-    console.log(coordinates.x, -coordinates.y)
-    return {'x': coordinates.x, 'y': 0, 'z': -coordinates.y};
-}
 
 // using collada from  Sketchup
 function loadBuildings(show_buildings){

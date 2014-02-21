@@ -64,9 +64,7 @@ function StreetViewOverlay() {
         $(document).ready(function(){
             if(mesh){
                 SVO.showing= $.extend(SVO.showing, showing);
-                mesh.children[0].children[0].material.opacity = OPACITY;
-                // mesh.children[0].children[1].material.opacity = OPACITY;
-                // mesh.children[0].children[2].material.opacity = OPACITY;
+                mesh.children[0].material.opacity = OPACITY;
                 SVO.mesh = mesh;
             }
 

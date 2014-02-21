@@ -41,6 +41,15 @@ def GeoInfo::go
       exit
     end
 
+    dir_model=UI.savepanel"Pick Directory ", "" , "model.dae"
+
+    if (dir_model)
+      puts dir_model
+    else
+      puts "User cancelled operation."
+      exit
+    end
+
     # get active model
     model=Sketchup.active_model
 
@@ -67,7 +76,6 @@ def GeoInfo::go
     # 6 = [0, 1, 1] (left back top)
     # 7 = [1, 1, 1] (right back top)
 
-
     # get four corners at base
     left_front = model_bb.corner(0)
     right_front = model_bb.corner(1)
@@ -88,9 +96,21 @@ def GeoInfo::go
     + "center_point = [" + model_center_latlong[1].to_f.to_s + ", " + model_center_latlong[0].to_f.to_s + "];\n" \
     )}
 
-    Sketchup.set_status_text "Writing geolocation"
+    # export colladae file
+    options_hash = {  :triangulated_faces   => true,
+                      :doublesided_faces    => true,
+                      :edges                => false,
+                      :materials_by_layer   => false,
+                      :author_attribution   => false,
+                      :texture_maps         => true,
+                      :selectionset_only    => false,
+                      :preserve_instancing  => true }
 
-    UI.messagebox "You have exported geolocation information\n"
+    status = model.export dir_model, options_hash
+
+    Sketchup.set_status_text "Writing model and geolocation"
+
+    UI.messagebox "You have exported model and geolocation information\n"
 
 #========================
 end ### End class GeoInfo
